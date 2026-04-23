@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Code | Rohit Deepkumar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent: #38bdf8;
+            --card-bg: rgba(30, 41, 59, 0.5);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --gradient-blue: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVIGATION (Same as your theme) --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 3000; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        #backBtn {
+            width: 90px;
+            height: 60px;
+            color: #fff;
+            border-radius: 15px;
+            background-color:rgba(56, 189, 248, 0.1);
+
+        }
+        #backBtn:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent);
+            transform: scale(1.05);
+            color: var(--accent);
+        }
+        .logo { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
+        .logo span { color: var(--accent); }
+
+        /* --- PURCHASE SECTION --- */
+        .purchase-container {
+            padding: 150px 8% 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .purchase-card {
+            background: var(--card-bg);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .product-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 20px 0;
+            color: #fff;
+        }
+
+        .price-tag span {
+            font-size: 1rem;
+            color: var(--text-dim);
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 25px 0;
+            list-style: none;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list li i { color: #22c55e; }
+
+        /* --- PAYMENT BUTTON --- */
+        .pay-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-blue);
+            color: white;
+            border: 2px solid var(black);;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pay-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(56, 189, 248, 0.4);
+        }
+
+        .secure-text {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ROHIT <span>DEEPKUMAR</span></div>
+       <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">
+           <button id="backBtn"><i class="fas fa-arrow-left"></i>  Back</button>
+        </a>
+    </nav>
+
+    <div class="purchase-container">
+        <div class="purchase-card">
+            <div class="product-icon">
+                <i class="fas fa-file-code"></i>
+            </div>
+            <h2>Premium Portfolio Code</h2>
+            <p style="color: var(--text-dim); margin-top: 10px;">Get the full source code with documentation.</p>
+
+            <div class="price-tag">
+                <span>₹499</span> ₹199
+            </div>
+
+            <ul class="features-list">
+                <li><i class="fas fa-check-circle"></i> Clean & Commented Code</li>
+                <li><i class="fas fa-check-circle"></i> Responsive Design</li>
+                <li><i class="fas fa-check-circle"></i> Lifetime Updates</li>
+                <li><i class="fas fa-check-circle"></i> 24/7 Priority Support</li>
+            </ul>
+
+            <button class="pay-btn" id="payButton">
+                <i class="fas fa-lock"></i> Pay & Get Code
+            </button>
+
+            <div class="secure-text">
+                <i class="fas fa-shield-alt"></i> Secured by SSL Encryption
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Rohit Deepkumar. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.getElementById('payButton').onclick = function(e){
+            // Note: Ye sirf UI demo hai. Real payment ke liye Razorpay Key lagegi.
+            var options = {
+                "key": "YOUR_RAZORPAY_KEY", // Yahan apni API Key dalein
+                "amount": "199", // Paisa in Paise (199.00)
+                "currency": "INR",
+                "name": "Rohit Deepkumar",
+                "description": "Portfolio Source Code Purchase",
+                "handler": function (response){
+                    alert("Payment Successful! ID: " + response.razorpay_payment_id);
+                    // Yahan payment success ke baad file download link open karein
+                    window.location.href = "https://1drv.ms/f/c/B97E830EF643DDBF/IgC1XKZ6hY9HRJULFwhi8C4GAaanPrg0sMHRlu_zgx-aPH8?e=b7lhNq";
+                },
+                "prefill": {
+                    "name": "Customer Name",
+                    "email": "customer@example.com"
+                },
+                "theme": { "color": "#38bdf8" }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>
+</body>
+</html>

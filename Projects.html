@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit Deepkumar | Official Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent: #38bdf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --gradient-blue: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 3000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
+        .logo span { color: var(--accent); }
+
+        /* --- DESKTOP MENU --- */
+        .desktop-links { display: none; }
+        .desktop-links ul { display: flex; list-style: none; gap: 20px; }
+        .desktop-links ul li a {
+            color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+            padding: 8px 12px; border-radius: 10px;
+        }
+        .desktop-links ul li a i { color: var(--accent); font-size: 1rem; }
+        .desktop-links ul li a:hover { background: rgba(56, 189, 248, 0.1); color: var(--accent); transform: translateY(-3px); }
+
+        /* --- MOBILE MENU BUTTON --- */
+        .menu-btn {
+            width: 60px; height: 60px; cursor: pointer; border-radius: 15px;
+            background: var(--gradient-blue); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 6px; border: none;
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4); transition: 0.4s; z-index: 3001;
+        }
+        .menu-btn span { display: block; width: 30px; height: 3px; background: white; border-radius: 3px; transition: 0.4s; }
+        .menu-btn.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-btn.active span:nth-child(2) { opacity: 0; }
+        .menu-btn.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* --- MENU OVERLAY --- */
+        .nav-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(25px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2500; visibility: hidden; opacity: 0; transition: 0.5s;
+        }
+        .nav-overlay.active { visibility: visible; opacity: 1; }
+        .nav-overlay ul { list-style: none; width: 100%; max-width: 500px; padding: 20px; }
+        .nav-overlay ul li { margin: 15px 0; transform: translateX(-50px); opacity: 0; transition: 0.5s; }
+        .nav-overlay.active ul li { transform: translateX(0); opacity: 1; }
+        .nav-overlay ul li a { 
+            font-size: 1.8rem; color: white; text-decoration: none; font-weight: 700; 
+            display: flex; align-items: center; gap: 20px; padding: 12px 20px; 
+            border-radius: 15px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+                .nav-overlay ul li a:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent);
+            transform: scale(1.05);
+            color: var(--accent);
+        }
+
+        /* --- HERO SECTION WITH ENTRY ANIMATIONS --- */
+        /* Niche se upar aane wali animation */
+@keyframes fadeInUpTitle {
+    0% {
+        opacity: 0;
+        transform: translateY(50px); /* 50px niche se start hoga */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Apni asli jagah par aa jayega */
+    }
+}
+
+/* Sirf My Projects title ke liye special class */
+.animate-title {
+    animation: fadeInUpTitle 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    display: inline-block; /* Animation smooth dikhne ke liye */
+    width: 100%;
+}
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; padding: 120px 8%; gap: 40px;
+            overflow: hidden; /* Taaki animation screen se bahar na dikhe */
+        }
+
+        /* Left Side Animation (Text) */
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-150px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Right Side Animation (Photo) */
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(150px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-text-content { 
+            animation: slideInLeft 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards; 
+            order: 2; 
+        }
+
+        .profile-container { 
+            animation: slideInRight 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards; 
+            order: 1; 
+        }
+
+        .profile-img { 
+            width: 250px; height: 250px; border-radius: 50%; 
+            object-fit: cover; border: 8px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.1);
+        }
+
+        .hero h1 { 
+            font-size: 3rem; font-weight: 800; margin-bottom: 20px; 
+            background: linear-gradient(to right, #fff, var(--accent)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+        }
+
+        .hero p { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 40px; line-height: 1.6; }
+
+        /* --- COLORFUL SOCIAL ICONS --- */
+        .social-hero { display: flex; gap: 15px; justify-content: center; margin-bottom: 40px; }
+        .social-hero a {
+            font-size: 1.6rem; width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 15px; background: rgba(255, 255, 255, 0.05);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: var(--text-dim); text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-hero a.github:hover { background: #24292e; color: #fff; transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+        .social-hero a.linkedin:hover { background: #0077b5; color: #fff; transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,119,181,0.3); }
+        .social-hero a.whatsapp:hover { background: #25d366; color: #fff; transform: translateY(-10px); box-shadow: 0 10px 20px rgba(37,211,102,0.3); }
+        .social-hero a.email:hover { background: #ea4335; color: #fff; transform: translateY(-10px); box-shadow: 0 10px 20px rgba(234,67,53,0.3); }
+
+        .resume-btn {
+            padding: 18px 45px; background: var(--gradient-blue);
+            color: white; text-decoration: none; font-weight: 700;
+            border-radius: 50px; transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
+        }
+
+        @media (min-width: 1024px) {
+            .menu-btn { display: none; }
+            .desktop-links { display: block; }
+            .hero { flex-direction: row; text-align: left; justify-content: space-between; }
+            .hero-text-content { order: 1; flex: 1; }
+            .profile-container { order: 2; }
+            .profile-img { width: 420px; height: 420px; }
+            .hero h1 { font-size: 5rem; }
+            .social-hero { justify-content: flex-start; }
+        }
+        /* --- REVEAL EFFECT CSS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.17, 0.55, 0.55, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+      /* --- PROJECTS SECTION --- */
+        .projects-section {
+            padding: 150px 8% 80px;
+            min-height: 100vh;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+        .section-title span { color: var(--accent); }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- PROJECT CARD --- */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) !important;
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .project-img-container {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .project-card:hover .project-img-container img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .project-content p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            height: 75px; /* Fixed height for alignment */
+            overflow: hidden;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .project-links a:hover {
+            color: var(--accent);
+        }
+
+        /* --- REVEAL ANIMATION --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.8s all ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .section-title { font-size: 2.2rem; }
+            .desktop-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ROHIT <span>DEEPKUMAR</span></div>
+        <div class="desktop-links">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="About me.html"><i class="fas fa-user-tie"></i> About Me</a></li>
+                <li><a href="Projects.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="Achivements.html"><i class="fas fa-award"></i> Achievements</a></li>
+                <li><a href="Services.html"><i class="fas fa-laptop-code"></i> Services</a></li>
+                <li><a href="Contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+        <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay">
+        <ul>
+            <li style="transition-delay: 0.1s;"><a href="index.html" onclick="toggleMenu()"><i class="fas fa-home"></i> Home</a></li>
+            <li style="transition-delay: 0.2s;"><a href="About me.html" onclick="toggleMenu()"><i class="fas fa-user-tie"></i> About Me</a></li>
+            <li style="transition-delay: 0.3s;"><a href="Projects.html" onclick="toggleMenu()"><i class="fas fa-project-diagram"></i> Projects</a></li>
+            <li style="transition-delay: 0.4s;"><a href="Achivements.html" onclick="toggleMenu()"><i class="fas fa-award"></i> Achievements</a></li>
+            <li style="transition-delay: 0.5s;"><a href="Services.html" onclick="toggleMenu()"><i class="fas fa-laptop-code"></i> Services</a></li>
+            <li style="transition-delay: 0.6s;"><a href="Contact.html" onclick="toggleMenu()"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+
+ <section class="projects-section">
+        <h2 class="section-title animate-title">MY <span>PROJECTS</span></h2>
+
+        <div class="projects-grid">
+                        <div class="project-card reveal">
+                <div class="project-img-container">
+                    <img src="Projects\ESF Portal.org and 1 more page - Personal - Microsoft​ Edge 18-02-2026 10_33_45.png" alt="Project 1">
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">HTML / CSS</span>
+                        <span class="tag">Postrage SQL</span>
+                        <span class="tag">Java Script</span>
+                    </div>
+                    <h3>Non-Profit Organization</h3>
+                    <p>The image shows the homepage of the "Educational Scholarship Foundation" (ESF), a platform dedicated to empowering dreams through education. The website features a navigation bar with options for scholarships, donations, and scholar/donor portals, alongside a search bar for resources. A language toggle is visible, currently displaying Hindi content that emphasizes education as a fundamental right for every child.</p>
+                    <div class="project-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-img-container">
+                    <img src="Projects\Rohit Deepkumar _ Official Portfolio and 1 more page - Personal - Microsoft​ Edge 19-02-2026 16_17_59.png" alt="Project 2">
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">UI/UX</span>
+                        <span class="tag">HTML/CSS</span>
+                    </div>
+                    <h3>Smart Portfolio</h3>
+                    <p>Responsive portfolio website with modern animations and voice integration features.</p>
+                    <div class="project-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+                     
+             <div class="project-card reveal">
+                <div class="project-img-container">
+                    <img src="Projects\AI Agent.webp" alt="Project 3">
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">AI</span>
+                    </div>
+                    <h3>AI Agent</h3>
+                    <p>Unlike a chatbot that just talks, an AI Agent independently plans and executes complex tasks to achieve a specific goal you set.</p>
+                    <div class="project-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-img-container">
+                    <img src="https://via.placeholder.com/600x400" alt="Project 1">
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                    </div>
+                    <h3>E-Commerce Platform</h3>
+                    <p>A full-featured online store with cart functionality, secure payments, and an admin dashboard.</p>
+                    <div class="project-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-img-container">
+                    <img src="https://via.placeholder.com/600x400" alt="Project 3">
+                </div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">AI</span>
+                    </div>
+                    <h3>AI Chatbot</h3>
+                    <p>An intelligent chatbot using NLP to help users solve technical queries in real-time.</p>
+                    <div class="project-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    <script>
+        function toggleMenu() {
+            const menuBtn = document.getElementById('menuBtn');
+            const navOverlay = document.getElementById('navOverlay');
+            menuBtn.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        // Reveal Animation Logic
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+    const windowHeight = window.innerHeight;
+
+    reveals.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        if (elementTop < windowHeight - 100) {
+            element.classList.add("active");
+
+            // Line ko animate karne wala logic
+            const progressBars = element.querySelectorAll('.skill-progress');
+            progressBars.forEach(bar => {
+                const target = bar.getAttribute('data-width');
+                bar.style.width = target; // Ye line 0 se target tak le jayegi
+            });
+        }
+    });
+}
+
+        // Run reveal on scroll and load
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", () => {
+            reveal();
+        });
+        
+    </script>
+</body>
+</html>

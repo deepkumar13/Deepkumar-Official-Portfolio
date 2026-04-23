@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit Deepkumar | Official Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent: #38bdf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --gradient-blue: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 3000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
+        .logo span { color: var(--accent); }
+
+        /* --- DESKTOP MENU --- */
+        .desktop-links { display: none; }
+        .desktop-links ul { display: flex; list-style: none; gap: 20px; }
+        .desktop-links ul li a {
+            color: var(--text-main); text-decoration: none; font-weight: 600; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+            padding: 8px 12px; border-radius: 10px;
+        }
+        .desktop-links ul li a i { color: var(--accent); font-size: 1rem; }
+        .desktop-links ul li a:hover { background: rgba(56, 189, 248, 0.1); color: var(--accent); transform: translateY(-3px); }
+
+        /* --- MOBILE MENU BUTTON --- */
+        .menu-btn {
+            width: 60px; height: 60px; cursor: pointer; border-radius: 15px;
+            background: var(--gradient-blue); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; gap: 6px; border: none;
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4); transition: 0.4s; z-index: 3001;
+        }
+        .menu-btn span { display: block; width: 30px; height: 3px; background: white; border-radius: 3px; transition: 0.4s; }
+        .menu-btn.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-btn.active span:nth-child(2) { opacity: 0; }
+        .menu-btn.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* --- MENU OVERLAY --- */
+        .nav-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(25px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2500; visibility: hidden; opacity: 0; transition: 0.5s;
+        }
+        .nav-overlay.active { visibility: visible; opacity: 1; }
+        .nav-overlay ul { list-style: none; width: 100%; max-width: 500px; padding: 20px; }
+        .nav-overlay ul li { margin: 15px 0; transform: translateX(-50px); opacity: 0; transition: 0.5s; }
+        .nav-overlay.active ul li { transform: translateX(0); opacity: 1; }
+        .nav-overlay ul li a { 
+            font-size: 1.8rem; color: white; text-decoration: none; font-weight: 700; 
+            display: flex; align-items: center; gap: 20px; padding: 12px 20px; 
+            border-radius: 15px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+                .nav-overlay ul li a:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent);
+            transform: scale(1.05);
+            color: var(--accent);
+        }
+/* --- ACHIEVEMENTS SECTION --- */
+        .achievements-section {
+            padding: 150px 8% 80px;
+            min-height: 100vh;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+
+        /* Niche se upar aane wali animation */
+@keyframes fadeInUpTitle {
+    0% {
+        opacity: 0;
+        transform: translateY(50px); /* 50px niche se start hoga */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Apni asli jagah par aa jayega */
+    }
+}
+
+/* Sirf My Projects title ke liye special class */
+.animate-title {
+    animation: fadeInUpTitle 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    display: inline-block; /* Animation smooth dikhne ke liye */
+    width: 100%;
+}
+
+        .section-title span { color: var(--accent); }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        /* --- CERTIFICATE CARD --- */
+        .cert-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        .cert-card.animate-rise {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cert-card:hover {
+            transform: translateY(-15px) !important;
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .cert-img-container {
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cert-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .cert-card:hover .cert-img-container img {
+            transform: scale(1.05);
+        }
+
+        .cert-info h3 {
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cert-info h3 i { font-size: 1.1rem; }
+
+        .cert-info .issuer {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .cert-info p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .view-cert-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .view-cert-btn:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        @media (min-width: 1024px) {
+            .menu-btn { display: none; }
+            .desktop-links { display: block; }
+        }
+
+        @media (max-width: 768px) {
+            .section-title { font-size: 2.2rem; }
+            .achievements-grid { grid-template-columns: 1fr; }
+        } 
+           </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ROHIT <span>DEEPKUMAR</span></div>
+        <div class="desktop-links">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="About me.html"><i class="fas fa-user-tie"></i> About Me</a></li>
+                <li><a href="Projects.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="Achivements.html"><i class="fas fa-award"></i> Achievements</a></li>
+                <li><a href="Services.html"><i class="fas fa-laptop-code"></i> Services</a></li>
+                <li><a href="Contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+        <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay">
+        <ul>
+            <li style="transition-delay: 0.1s;"><a href="index.html" onclick="toggleMenu()"><i class="fas fa-home"></i> Home</a></li>
+            <li style="transition-delay: 0.2s;"><a href="About me.html" onclick="toggleMenu()"><i class="fas fa-user-tie"></i> About Me</a></li>
+            <li style="transition-delay: 0.3s;"><a href="Projects.html" onclick="toggleMenu()"><i class="fas fa-project-diagram"></i> Projects</a></li>
+            <li style="transition-delay: 0.4s;"><a href="Achivements.html" onclick="toggleMenu()"><i class="fas fa-award"></i> Achievements</a></li>
+            <li style="transition-delay: 0.5s;"><a href="Services.html" onclick="toggleMenu()"><i class="fas fa-laptop-code"></i> Services</a></li>
+            <li style="transition-delay: 0.6s;"><a href="Contact.html" onclick="toggleMenu()"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+
+ <section class="achievements-section">
+        <h2 class="section-title animate-title">MY <span>ACHIEVEMENTS</span></h2>
+
+        <div class="achievements-grid" id="achieveGrid">
+
+                        <div class="cert-card">
+                <div class="cert-img-container">
+                    <img src="Certificate\HTML and CSS GCF Certificate.jpeg" alt="Full Stack Certificate">
+                </div>
+                <div class="cert-info">
+                    <span class="issuer">CERTIPORT / CERTNEXUS / pearson</span>
+                    <h3><i class="fas fa-certificate"></i> HTML and CSS</h3>
+                    <p>IT Specialist Certification: HTML & CSS (Certiport & Pearson VUE)
+Maine industry-standard modern web development techniques mein apni maharat (expertise) sabit ki hai, jisme semantic HTML5 aur responsive CSS3 layouts shamil hain. Yeh credential meri technical accuracy aur clean, professional code likhne ki kabliyat ko validate karta hai.</p>
+                    <a href="https://www.certiport.com/Portal/Pages/CredentialVerification.aspx" class="view-cert-btn"><i class="fas fa-external-link-alt"></i> Verify Certificate</a>
+                </div>
+            </div>
+             <div class="cert-card">
+                <div class="cert-img-container">
+                    <img src="Certificate\Taksh Computer Education Certificate.jpeg" alt="Full Stack Certificate">
+                </div>
+                <div class="cert-info">
+                    <span class="issuer">Taksh Computer Education</span>
+                    <h3><i class="fas fa-certificate"></i> Master in Software Applicatin</h3>
+                    <p>Maine ek saal ka intensive training program (Sept 2022 - Aug 2023) B+ grade ke saath pura kiya hai, jo software applications mein meri core expertise ko darshata hai. Yeh course computer literacy aur functional software tools mein meri technical proficiency ko validate karta hai. Is certification ne mujhe industry-standard applications aur digital workflow ko effectively manage karne ke liye taiyar kiya hai.</p>
+                    <a href="#" class="view-cert-btn"><i class="fas fa-external-link-alt"></i> Verify Certificate</a>
+                </div>
+            </div>
+             <div class="cert-card">
+                <div class="cert-img-container">
+                    <img src="Certificate\Knowledge Group, Anand Certificate.jpeg" alt="Full Stack Certificate">
+                </div>
+                <div class="cert-info">
+                    <span class="issuer">Knowledge Group, Anand</span>
+                    <h3><i class="fas fa-certificate"></i> High-Pressure Performance</h3>
+                    <p>Knowledge Group, Anand dwara aayojit is competitive mock test mein maine poore 5,269 students mein se 7th Rank haasil ki hai. Yeh achievement meri analytical skills, dedication aur pressure mein behtareen performance dene ki kabliyat ko darshati hai.</p>
+                    <a href="#" class="view-cert-btn"><i class="fas fa-external-link-alt"></i> Verify Certificate</a>
+                </div>
+            </div>
+                        <div class="cert-card">
+                <div class="cert-img-container">
+                    <img src="Certificate\GSRTC prerit Vigyan Ganit Paryavaran Pradarshan Certificate.jpeg" alt="Full Stack Certificate">
+                </div>
+                <div class="cert-info">
+                    <span class="issuer">G.C.E.R.T Ghandhinagar,Gujarat</span>
+                    <h3><i class="fas fa-certificate"></i>Presentation & Communication</h3>
+                    <p>Maine Anand district level par aayojit "Dr. Vikram Sarabhai Science Exhibition (2019-20)" mein sakriya bhagidari nibhayi hai. Yeh certificate mere scientific temperament aur complex subjects mein research-based learning ki ruchi ko darshata hai. Is pradarshan mein participation meri innovative thinking aur presentation skills ka ek bada saboot hai.</p>
+                    <a href="#" class="view-cert-btn"><i class="fas fa-external-link-alt"></i> Verify Certificate</a>
+                </div>
+            </div>
+                        <div class="cert-card">
+                <div class="cert-img-container">
+                    <img src="Certificate\90 Paragana Rohit Samaj .jpeg" alt="Full Stack Certificate">
+                </div>
+                <div class="cert-info">
+                    <span class="issuer">90 Pargana Rohit Samaj - Academic Honor</span>
+                    <h3><i class="fas fa-certificate"></i> Consistency & Dedication</h3>
+                    <p>Maine March-April 2022 ki Class 10th board exam mein 87% marks haasil karke apne samaj mein pratishthit sthan prapt kiya hai. Yeh samman patra meri academic excellence, kadi mehnat aur nirantar pragati (continuous progress) ko darshata hai.</p>
+                    <a href="#" class="view-cert-btn"><i class="fas fa-external-link-alt"></i> Verify Certificate</a>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-img-container">
+                    <img src="https://via.placeholder.com/600x450" alt="Full Stack Certificate">
+                </div>
+                <div class="cert-info">
+                    <span class="issuer">Google / Coursera</span>
+                    <h3><i class="fas fa-certificate"></i> Full Stack Web Dev</h3>
+                    <p>This certification covers advanced MERN stack development, including database management with MongoDB, server-side logic with Node.js, and building responsive front-end interfaces using React.</p>
+                    <a href="#" class="view-cert-btn"><i class="fas fa-external-link-alt"></i> Verify Certificate</a>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-img-container">
+                    <img src="https://via.placeholder.com/600x450" alt="UI/UX Design Certificate">
+                </div>
+                <div class="cert-info">
+                    <span class="issuer">Adobe Creative Hub</span>
+                    <h3><i class="fas fa-medal"></i> UI/UX Design Pro</h3>
+                    <p>Successfully completed a professional program focusing on user-centered design, wireframing, and high-fidelity prototyping using Figma and Adobe XD. Learned to create seamless user journeys.</p>
+                    <a href="#" class="view-cert-btn"><i class="fas fa-external-link-alt"></i> Verify Certificate</a>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-img-container">
+                    <img src="https://via.placeholder.com/600x450" alt="Python Certificate">
+                </div>
+                <div class="cert-info">
+                    <span class="issuer">Microsoft Learning</span>
+                    <h3><i class="fas fa-code"></i> Python for Data Science</h3>
+                    <p>Mastered data analysis techniques using Python libraries like Pandas and NumPy. The course also covered foundational Machine Learning concepts and automated scripting workflows.</p>
+                    <a href="#" class="view-cert-btn"><i class="fas fa-external-link-alt"></i> Verify Certificate</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+       <script>
+    function toggleMenu() {
+        const menuBtn = document.getElementById('menuBtn');
+        const navOverlay = document.getElementById('navOverlay');
+        menuBtn.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+        
+        // Agar overlay active hai to scroll lock karein
+        document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : 'auto';
+    }
+
+    // Updated Animation Logic: Turant load hone ke liye
+    function animateCerts() {
+        const cards = document.querySelectorAll('.cert-card');
+        
+        cards.forEach((card, index) => {
+            // Scroll check hata diya gaya hai taaki turant dikhe
+            setTimeout(() => {
+                card.classList.add('animate-rise');
+            }, index * 150); // 150ms ka gap har card ke beech (thoda fast feel hoga)
+        });
+    }
+
+    // Page load hote hi animation start ho jayegi
+    window.addEventListener('load', () => {
+        animateCerts();
+        // Voice Intro wala part yahan se remove kar diya gaya hai
+    });
+
+    // Backup ke liye scroll listener rakha hai agar aap naye cards add karein
+    window.addEventListener('scroll', () => {
+        const cards = document.querySelectorAll('.cert-card:not(.animate-rise)');
+        if(cards.length > 0) {
+            animateCerts();
+        }
+    });
+</script>
+</body>
+</html>
